@@ -17,7 +17,22 @@
     <!-- Header -->
     <?php include("header.php"); ?>
 
+    <section class="box special">
+                    <header class="major">
+                        <h2>Tell us about your experience!</h2>
+                    </header>
 
+                    <form action="/action_page.php">
+                        <label for="email">Email:</label><br>
+                        <input type="text" id="email" name="email"><br>
+                        <label for="note">Note:</label><br>
+                        <textarea id="note" name="note" rows="8" cols="25">
+Help us improve Hoo's Pizza!
+                        </textarea>
+                        <input type="submit" value="Submit" style="margin:15px;">
+                    </form> 
+                    <!--<span class="image featured"><img src="images/pic01.jpg" alt="" /></span>-->
+                </section>
 
     <?php include("footer.php"); ?>
 
