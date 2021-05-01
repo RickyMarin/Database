@@ -77,7 +77,11 @@
 			<!-- Header -->
             <?php include("header.php"); ?>
 
-            <div style="padding:7%;">
+            <div style="padding:5%;">
+                
+                <h2 style="text-align: center;">Order Form</h2>
+                <hr>
+                
                 <form method="post" style="padding:2%;border: 2px solid;border-radius:25px;">
 
                     <h2>Pizza Size:</h2>
