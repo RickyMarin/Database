@@ -78,18 +78,55 @@
 			<!-- Header -->
             <?php include("header.php"); ?>
 
-            <div style="padding:2%;">
-            <h2>Topppings:</h2>
-                <form method="post">
+            <div style="padding:7%;">
+                <form method="post" style="padding:2%;border: 2px solid;border-radius:25px;">
+
+                    <h2>Pizza Size:</h2>
+
+                    <input type="radio" id="small" name="pizza-size" value="small" checked>
+                    <label for="small">Small</label>
+                    <input type="radio" id="medium" name="pizza-size" value="medium">
+                    <label for="medium">Medium</label>
+                    <input type="radio" id="large" name="pizza-size" value="large">
+                    <label for="large">Large</label>
+                    
+                    <hr>
+
+                    <h2>Cheese:</h2>
+                    <div class="pizza-cheese">
+                    <input type="checkbox" id="cheese" name="cheese" onclick="displayFunction('pizza-cheese')">
+                    <label for="cheese">Cheese</label>
+                    <select class="pizza-cheese" name="pizza-cheese" id="pizza-cheese" style="display:none;">
+                        <option value="light">Light</option>
+                        <option value="regular">Regular</option>
+                        <option value="extra">Extra</option>
+                    </select>
+                    </div>
+
+                    <hr>
+
+                    <h2>Topppings:</h2>                   
                     <p>Choose Meats:</p>
 
-                    <!--
-                    <label for="light">Light</label>
-                    <input type="radio" id="regular" name="quantity" value="regular">
-                    <label for="regular">Regular</label>
-                    <input type="radio" id="extra" name="quantity" value="extra">
-                    <label for="extra">Extra</label>
-                    -->
+                    <div class="pizza-topping">
+                    <input type="checkbox" id="pepperoni" name="pepperoni" onclick="displayFunction('pepperoni-topping')">
+                    <label for="pepperoni">Pepperoni</label>
+                    <select class="pepperoni-topping" name="pepperoni-topping" id="pepperoni-topping" style="display:none;">
+                        <option value="light">Light</option>
+                        <option value="regular">Regular</option>
+                        <option value="extra">Extra</option>
+                    </select>
+                    </div>
+
+                    <div class="pizza-topping">
+                    <input type="checkbox" id="chicken" name="chicken" onclick="displayFunction('chicken-topping')">
+                    <label for="chicken">Chicken</label>
+                    <select class="chicken-topping" name="chicken-topping" id="chicken-topping" style="display:none;">
+                        <option value="light">Light</option>
+                        <option value="regular">Regular</option>
+                        <option value="extra">Extra</option>
+                    </select>
+                    </div>
 
                     <div class="pizza-topping">
                     <input type="checkbox" id="ham" name="ham" onclick="displayFunction('ham-topping')">
@@ -114,9 +151,9 @@
                     <p>Choose Nonmeats:</p>
 
                     <div class="pizza-topping">
-                    <input type="checkbox" id="cheese" name="cheese" onclick="displayFunction('cheese-topping')">
-                    <label for="cheese">Cheese</label>
-                    <select class="cheese-topping" name="cheese-topping" id="cheese-topping" style="display:none;">
+                    <input type="checkbox" id="cheddar-cheese" name="cheddar-cheese" onclick="displayFunction('cheddar-cheese-topping')">
+                    <label for="cheddar-cheese">Cheddar Cheese</label>
+                    <select class="cheddar-cheese-topping" name="cheddar-cheese-topping" id="cheddar-cheese-topping" style="display:none;">
                         <option value="light">Light</option>
                         <option value="regular">Regular</option>
                         <option value="extra">Extra</option>
@@ -125,7 +162,7 @@
 
                     <div class="pizza-topping">
                     <input type="checkbox" id="pineapple" name="pineapple" onclick="displayFunction('pineapple-topping')">
-                    <label for="cheese">Pineapple</label>
+                    <label for="pineapple">Pineapple</label>
                     <select class="pineapple-topping" name="pineapple-topping" id="pineapple-topping" style="display:none;">
                         <option value="light">Light</option>
                         <option value="regular">Regular</option>
@@ -133,7 +170,29 @@
                     </select>
                     </div>
 
-                    <input type="submit" value="Save" class="btn btn-secondary">    
+                    <div class="pizza-topping">
+                    <input type="checkbox" id="onions" name="onions" onclick="displayFunction('onions-topping')">
+                    <label for="onions">Onions</label>
+                    <select class="onions-topping" name="onions-topping" id="onions-topping" style="display:none;">
+                        <option value="light">Light</option>
+                        <option value="regular">Regular</option>
+                        <option value="extra">Extra</option>
+                    </select>
+                    </div>
+
+                    <div class="pizza-topping">
+                    <input type="checkbox" id="spinach" name="spinach" onclick="displayFunction('spinach-topping')">
+                    <label for="spinach">Spinach</label>
+                    <select class="spinach-topping" name="spinach-topping" id="spinach-topping" style="display:none;">
+                        <option value="light">Light</option>
+                        <option value="regular">Regular</option>
+                        <option value="extra">Extra</option>
+                    </select>
+                    </div>
+                    
+                    <hr>
+
+                    <input type="submit" value="Order" class="btn btn-secondary">    
                 </form>
             </div>
             
