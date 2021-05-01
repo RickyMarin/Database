@@ -76,6 +76,24 @@
 
 			<!-- Header -->
             <?php include("header.php"); ?>
+            <?php include("library.php"); ?> <!-- Includes  database login information-->
+            
+            <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+            
+            <?php 
+            /*
+                $con = new mysqli($SERVER, $USERNAME, $PASSWORD, $DATABASE);
+
+                // Form the SQL query (an INSERT query)
+                $sql="INSERT INTO Persons (FirstN, LastN, Age)
+                VALUES
+                ('$_POST[firstname]','$_POST[lastname]','$_POST[age]')";
+                
+                mysqli_close($con);
+            */
+            ?>
+
+            <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
 
             <div style="padding:5%;">
                 
@@ -83,6 +101,17 @@
                 <hr>
                 
                 <form method="post" style="padding:2%;border: 2px solid;border-radius:25px;">
+
+                    <h2>Location:</h2>
+                    <!-- placeholder values-->
+                    <input type="radio" id="address1" name="location" value="address1" checked>
+                    <label for="address1">26 Smoky Hollow Drive, Pomona, CA 91768</label>
+                    <input type="radio" id="address2" name="location" value="address2">
+                    <label for="address2">274 Plumb Branch Ave., Duluth, GA 30096</label>
+                    <input type="radio" id="address3" name="location" value="address3">
+                    <label for="address3">21 Bald Hill St., Rossville, GA 30741</label>
+                    
+                    <hr>
 
                     <h2>Pizza Size:</h2>
 
