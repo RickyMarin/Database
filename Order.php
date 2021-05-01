@@ -69,6 +69,16 @@
                 x.style.display = "none";
             }
         }
+
+        function displayLocationFunction() {
+            if(document.getElementById("pickup").checked) {
+                document.getElementById("pickup-method").style.display = "block"; // unhide it
+            } else {
+                document.getElementById("pickup-method").style.display = "none";  //hide
+            }
+        }
+
+
     </script>
 
 	<body class="is-preload">
@@ -103,14 +113,29 @@
                 <form method="post" style="padding:2%;border: 2px solid;border-radius:25px;">
 
                     <h2>Location:</h2>
+
+                    <div class="pizza-cheese">
+                    <input type="radio" id="delivery" name="location" value="delivery" onclick="displayLocationFunction()" checked>
+                    <label for="delivery">Delivery</label>
+                    <input type="radio" id="pickup" name="location" value="pickup" onclick="displayLocationFunction()">
+                    <label for="pickup">Pickup</label>
+                    <select class="pickup-method" name="pickup-method" id="pickup-method" style="display:none;">
+                        <option value="address1">26 Smoky Hollow Drive, Pomona, CA 91768</option>
+                        <option value="address2">274 Plumb Branch Ave., Duluth, GA 30096</option>
+                        <option value="address3">21 Bald Hill St., Rossville, GA 30741</option>
+                    </select>
+                    </div>
+
                     <!-- placeholder values-->
+                    <!--
                     <input type="radio" id="address1" name="location" value="address1" checked>
                     <label for="address1">26 Smoky Hollow Drive, Pomona, CA 91768</label>
                     <input type="radio" id="address2" name="location" value="address2">
                     <label for="address2">274 Plumb Branch Ave., Duluth, GA 30096</label>
                     <input type="radio" id="address3" name="location" value="address3">
                     <label for="address3">21 Bald Hill St., Rossville, GA 30741</label>
-                    
+                    -->
+
                     <hr>
 
                     <h2>Pizza Size:</h2>
