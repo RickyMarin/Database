@@ -61,12 +61,94 @@
         }
     </style>
 
+    <script>
+        function displayFunction(name) {
+            var x = document.getElementById(name);
+            if (x.style.display === "none") { // if element hidden
+                x.style.display = "block"; // unhide it
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
 	<body class="is-preload">
 		<div id="page-wrapper">
 
 			<!-- Header -->
             <?php include("header.php"); ?>
 
+            <div style="padding:2%;">
+            <h2>Topppings:</h2>
+                <form method="post">
+                    <p>Choose Meats:</p>
+
+                    <!--
+                    <label for="light">Light</label>
+                    <input type="radio" id="regular" name="quantity" value="regular">
+                    <label for="regular">Regular</label>
+                    <input type="radio" id="extra" name="quantity" value="extra">
+                    <label for="extra">Extra</label>
+                    -->
+
+                    <div class="pizza-topping">
+                    <input type="checkbox" id="ham" name="ham" onclick="displayFunction('ham-topping')">
+                    <label for="ham">Ham</label>
+                    <select class="ham-topping" name="ham-topping" id="ham-topping" style="display:none;">
+                        <option value="light">Light</option>
+                        <option value="regular">Regular</option>
+                        <option value="extra">Extra</option>
+                    </select>
+                    </div>
+
+                    <div class="pizza-topping">
+                    <input type="checkbox" id="beef" name="beef" onclick="displayFunction('beef-topping')">
+                    <label for="beef">Beef</label>
+                    <select class="beef-topping" name="beef-topping" id="beef-topping" style="display:none;">
+                        <option value="light">Light</option>
+                        <option value="regular">Regular</option>
+                        <option value="extra">Extra</option>
+                    </select>
+                    </div>
+
+                    <p>Choose Nonmeats:</p>
+
+                    <div class="pizza-topping">
+                    <input type="checkbox" id="cheese" name="cheese" onclick="displayFunction('cheese-topping')">
+                    <label for="cheese">Cheese</label>
+                    <select class="cheese-topping" name="cheese-topping" id="cheese-topping" style="display:none;">
+                        <option value="light">Light</option>
+                        <option value="regular">Regular</option>
+                        <option value="extra">Extra</option>
+                    </select>
+                    </div>
+
+                    <div class="pizza-topping">
+                    <input type="checkbox" id="pineapple" name="pineapple" onclick="displayFunction('pineapple-topping')">
+                    <label for="cheese">Pineapple</label>
+                    <select class="pineapple-topping" name="pineapple-topping" id="pineapple-topping" style="display:none;">
+                        <option value="light">Light</option>
+                        <option value="regular">Regular</option>
+                        <option value="extra">Extra</option>
+                    </select>
+                    </div>
+
+                    <input type="submit" value="Save" class="btn btn-secondary">    
+                </form>
+            </div>
+            
+
+            <!--
+            <div class="pizza-topping">
+                <input type="checkbox" id="ham" name="ham" onclick="displayFunction('ham-topping')">
+                <label for="ham">Ham</label>
+                <select class="ham-topping" name="ham-topping" id="ham-topping" style="display:none;">
+                    <option value="light">Light</option>
+                    <option value="regular">Regular</option>
+                    <option value="extra">Extra</option>
+                </select>
+            </div>
+            -->
 
 
 			<!-- Footer -->
