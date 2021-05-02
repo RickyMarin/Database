@@ -174,7 +174,7 @@
 
                     }
                 } catch (Exception $e) {
-                    echo "Duplicate email Address"; //this is currently not working
+
                 }
 
 

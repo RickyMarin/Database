@@ -36,7 +36,7 @@ $user = $stmt->fetch();
                             </div>
                             <div class="text-center">
                                 <p><p>
-                                    <a class="btn btn-info btn-lg" href="/updateinfo.php/">Update Info</a>
+                                    <a class="btn btn-info btn-lg" href="updateinfo.php/">Update Info</a>
                                 </p></p>
                             </div>
                         </div>

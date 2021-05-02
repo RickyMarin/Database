@@ -1,4 +1,4 @@
-//<?php
+<?php
 //$SERVER = 'usersrv01.cs.virginia.edu';
 //$USERNAME = 'ram8ny';
 //$PASSWORD = 'Spring2021!!';
