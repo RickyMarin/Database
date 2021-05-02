@@ -18,6 +18,7 @@
 					<li><a href="contact.php">Contact Us</a></li>
 					<li><a href="OrderStatus.php">Check Order Status</a></li>
 					<li><a href="SignUp.php" class="button">Sign Up</a></li>
+                    <li><a href="Login.php" class="button">Log in</a></li>
 				</ul>
 			</nav>
 		</header>

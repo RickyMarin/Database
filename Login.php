@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="assets/css/main.css" />
 </head>
 <?php include("library.php"); ?>
+<?php include("header.php"); ?>
+
 <?php
 function makeSafe($value)
 {
@@ -52,8 +54,12 @@ echo $user->upass;
 <body class="is-preload">
 <div id="page-wrapper">
 
-    <!-- Header -->
-    <?php include("header.php"); ?>
+    <!-- Header --><?php
+    if(isset($_SESSION['logged_in'])){
+        header("Location:Order.php");
+        echo("Please make an account");
+    }
+    ?>
 
     <section id="main" class="container medium">
         <header>
