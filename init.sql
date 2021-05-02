@@ -4,6 +4,12 @@ CREATE TABLE Topping (
 	PRIMARY KEY (tid),
 	UNIQUE (tname));
 
+CREATE TABLE Size (
+	sid int(10) NOT NULL AUTO_INCREMENT, 
+	sname varchar(30) NOT NULL,
+	PRIMARY KEY (sid),
+	UNIQUE (sname));
+
 CREATE TABLE Users(
 	uemail varchar(256) NOT NULL, 
 	uname varchar(30) NOT NULL, 
@@ -19,13 +25,16 @@ CREATE TABLE Orders (
 	orderNum int(10) NOT NULL AUTO_INCREMENT, 
 	uemail varchar(40) NOT NULL,
     tid int(10) NOT NULL,
+    sid int(10) NOT NULL,
+    cheese varchar(20) NOT NULL,
     quantity varchar(7) NOT NULL,
 	deliver int(1) NOT NULL DEFAULT 1 CHECK (deliver = 0 OR deliver = 1), 
 	cost int(3) NOT NULL DEFAULT 15 CHECK (cost >= 0),
 	orderStatus int(1) NOT NULL DEFAULT 0 CHECK (orderStatus = 0 OR orderStatus = 1),
 	PRIMARY KEY (orderNum), 
 	FOREIGN KEY (uemail) REFERENCES Users(uemail),
-    FOREIGN KEY (tid) REFERENCES Topping(tid));
+    FOREIGN KEY (tid) REFERENCES Topping(tid),
+    FOREIGN KEY (sid) REFERENCES Size(sid));
 
 
 CREATE TABLE UsersPhone (
@@ -69,10 +78,3 @@ CREATE TABLE Driver (
     ephone varchar(10) NOT NULL CHECK (length(ephone) = 10), 
     PRIMARY KEY (eid),
     FOREIGN KEY (eid) REFERENCES Employee(eid)); 
-
-CREATE TABLE Delivers (
-	eid int(10) NOT NULL,
-	orderNum int(10) NOT NULL,
-    PRIMARY KEY (orderNum), 
-    FOREIGN KEY (orderNum) REFERENCES Orders(orderNum), 
-    FOREIGN KEY (eid) REFERENCES Employee(eid));
