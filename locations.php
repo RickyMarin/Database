@@ -18,10 +18,10 @@
     <!-- Header -->
     <?php include("header.php"); ?>
     <table id='locations-table'>
-        <tr><td><p>Okay oO</p>Wow</td></tr>
+        <!-- <tr><td><p>Okay oO</p>Wow</td></tr>
         <tr><td>Gang!</td></tr>
         <tr><td></td></tr>
-        <tr><td></td></tr>
+        <tr><td></td></tr> -->
     </table>
     <?php?>
 
@@ -52,6 +52,7 @@
     const writeTable = (locations) => {
         let table = document.getElementById('locations-table');
         for(let location of locations) {
+            console.log(location);
             let newTr = document.createElement('tr');
             let newTd = document.createElement('td');
             
@@ -74,10 +75,17 @@
             newTr.appendChild(newTd);
             table.appendChild(newTr);
         }
+        if (locations.length == 0) {
+            let newTr = document.createElement('tr');
+            let newTd = document.createElement('td');
+            newTd.innerHTML = "No Locations Have Been Made.";
+            newTr.appendChild(newTd);
+            table.appendChild(newTr);
+        }
     };
 
     requestLocations().then((data) => {
-        console.log(data);
+        writeTable(data);
     });
 </script>
 <script src="assets/js/jquery.min.js"></script>
