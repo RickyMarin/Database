@@ -130,6 +130,10 @@
                 echo "<font color=red  size='5pt'>You did not enter a correct Phone Number</font> </p>";
                 $error = true;
             }
+            if($_POST["PhoneNum"] == $_POST["HomePhoneNum"]){
+                echo "<font color=red  size='5pt'>You can not have the same home and phone number</font> </p>";
+                $error = true;
+            }
 
             $points = 0;
             $PhoneType = "Mobile";

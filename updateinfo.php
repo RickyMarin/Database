@@ -1,9 +1,9 @@
 <html>
 <head>
-    <title>Order Status</title>
+    <title>Update Info</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="assets/css/main.css"/>
+    <link rel="stylesheet" href="../assets/css/main.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -28,14 +28,40 @@ $Homestmt->execute([$_SESSION['email'],$home]);
 $Homeuser = $Homestmt->fetch();
 ?>
 
-<?php include("LoggedInHeader.php"); ?>
+<html>
+<head>
+    <title>Hoo's Pizza</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+</head>
+<body>
+<header id="header">
+    <nav id="nav">
+        <ul>
+            <!--<li>-->
+            <!--<a href="#" class="icon solid fa-angle-down">Browse</a>
+            <ul>-->
+            <li><a href="../index.php">Home</a></li>
+            <li><a href="../Order.php">Order a Pizza!</a></li>
+            <li><a href="../contact.php">Contact Us</a></li>
+            <li><a href="../OrderStatus.php">Check Order Status</a></li>
+            <li><a href="../account.php">Account Info</a></li>
+            <li><a href='../logout.php'>Click here to log out</a></li>
+
+        </ul>
+    </nav>
+</header>
+</body>
+</html>
 <div class="container-fluid">
     <form method="POST" validate enctype="multipart/form-data">
 
         <fieldset class="form-group">
             <div class="border border-light p-3 mb-4">
                 <div class="text-left">
-                    <h1> Your Current Info </h1>
+
+                    <h2> Your Current Info </h2>
                     <form class="blueForms" id="id-profile_form" method="post">
                         <div id="div_id_first_name" class="form-group"><label for="id_first_name"
                                                                               class=" requiredField">
@@ -57,7 +83,7 @@ $Homeuser = $Homestmt->fetch();
                                     entered in the format: '9999999999'. </small></div>
                         </div>
                         Home Phone number<span class="asteriskField">*</span></form>
-                    <div class=""><input type="text" name="HomePhoneNum" value=<?php echo $Homeuser['uphone']; ?> maxlength="17"
+                    <div class=""><input type="text" name="HomePhoneNum" value='<?php echo $Homeuser['uphone'];?>' maxlength="17"
                                          class="textinput textInput form-control" required id="id_phone_number">
                         <small id="hint_id_phone_number" class="form-text text-muted">Phone number must be entered
                             in the format: '9999999999'. </small></div>
