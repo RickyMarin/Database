@@ -54,13 +54,13 @@ $Homeuser = $Homestmt->fetch();
                                                  value=<?php echo $Phoneuser['uphone']; ?> maxlength="17"
                                                  class="textinput textInput form-control" required id="id_phone_number">
                                 <small id="hint_id_phone_number" class="form-text text-muted">Phone number must be
-                                    entered in the format: '9999999999'. Up to 15 digits allowed.</small></div>
+                                    entered in the format: '9999999999'. </small></div>
                         </div>
                         Home Phone number<span class="asteriskField">*</span></form>
                     <div class=""><input type="text" name="HomePhoneNum" value=<?php echo $Homeuser['uphone']; ?> maxlength="17"
                                          class="textinput textInput form-control" required id="id_phone_number">
                         <small id="hint_id_phone_number" class="form-text text-muted">Phone number must be entered
-                            in the format: '9999999999'. Up to 15 digits allowed.</small></div>
+                            in the format: '9999999999'. </small></div>
                 </div>
                 Address<span class="asteriskField">*</span>
                 <div class=""><input type="text" name="Address" value='<?php echo $user['uaddrstr'];?>' maxlength="30"
