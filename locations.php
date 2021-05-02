@@ -17,14 +17,68 @@
 
     <!-- Header -->
     <?php include("header.php"); ?>
-
-
+    <table id='locations-table'>
+        <tr><td><p>Okay oO</p>Wow</td></tr>
+        <tr><td>Gang!</td></tr>
+        <tr><td></td></tr>
+        <tr><td></td></tr>
+    </table>
+    <?php?>
 
     <?php include("footer.php"); ?>
 
 </div>
 
 <!-- Scripts -->
+<script>
+    function requestLocations() {
+        var xmlhttp = new XMLHttpRequest();
+        return new Promise ((resolve, reject) => {
+    
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+            let data = JSON.parse(xmlhttp.responseText);
+            return resolve(data);
+            }
+        }
+        let url = "./locationsdata.php?data=true";
+
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+        });
+    }
+
+    const writeTable = (locations) => {
+        let table = document.getElementById('locations-table');
+        for(let location of locations) {
+            let newTr = document.createElement('tr');
+            let newTd = document.createElement('td');
+            
+            let address = "Address: ";
+            let addressElem = document.createElement('p');
+            addressElem.innerHTML = address;
+            
+            let cashier = "Cashier: ";
+            let cashierElem = document.createElement('p');
+            cashierElem.innerHTML = cashier;
+            
+            let drivers = "Drivers: ";
+            let driversElem = document.createElement('p');
+            driversElem.innerHTML = drivers;
+            
+            newTd.appendChild(addressElem);
+            newTd.appendChild(cashierElem);
+            newTd.appendChild(driversElem);
+            
+            newTr.appendChild(newTd);
+            table.appendChild(newTr);
+        }
+    };
+
+    requestLocations().then((data) => {
+        console.log(data);
+    });
+</script>
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/jquery.dropotron.min.js"></script>
 <script src="assets/js/jquery.scrollex.min.js"></script>
