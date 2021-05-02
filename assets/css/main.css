@@ -23,7 +23,7 @@
 	footer, header, hgroup, menu, nav, output, ruby,
 	section, summary, time, mark, audio, video {
 		margin: 0;
-		padding: 0;
+		padding: 40px;
 		border: 0;
 		font-size: 100%;
 		font: inherit;
@@ -160,6 +160,7 @@
 		font-size: 2.25em;
 		line-height: 1.5em;
 		letter-spacing: -0.035em;
+		padding: 40px;
 	}
 
 	h3 {
