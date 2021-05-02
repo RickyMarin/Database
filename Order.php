@@ -248,12 +248,18 @@
                     </div>
                     
                     <hr>
+                    
+
+                    <p>Use points: 0</p> <!-- Use function to fetch sign in user points--> 
+                    <button type="button" class="btn btn-secondary" onclick="alert('Points applied!')">Apply</button>
+                    <p>You pay: $10.00</p> <!-- Use button function to subtract from price and take away all points from user-->
+                    
 
                     <input type="submit" value="Order" class="btn btn-secondary">    
                 </form>
             </div>
             
-
+            
             <!--
             <div class="pizza-topping">
                 <input type="checkbox" id="ham" name="ham" onclick="displayFunction('ham-topping')">
