@@ -1,6 +1,5 @@
 <html>
 <head>
-    <link rel="icon" href="images/favicon.ico" type="image/ico">
     <title>Hoo's Pizza</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -8,7 +7,6 @@
 </head>
 <body>
 <header id="header">
-    <a href="index.php" class="image-link"><img src="images/logo.png" width="100" height="100"></a>
     <nav id="nav">
         <ul>
             <!--<li>-->
