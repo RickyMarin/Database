@@ -12,7 +12,8 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="assets/css/main.css"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <style>
@@ -121,7 +122,7 @@
                 echo "<font color=red  size='5pt'>You did not enter a state</font> </p>";
                 $error = true;
             }
-            if (empty($_POST["HomePhoneNum"]) ||  !is_numeric($_POST["HomePhoneNum"]) || strlen($HomePhone) != 10) {
+            if (empty($_POST["HomePhoneNum"]) || !is_numeric($_POST["HomePhoneNum"]) || strlen($HomePhone) != 10) {
                 echo "<font color=red  size='5pt'>You did not enter a correct home Phone Number</font> </p>";
                 $error = true;
             }
@@ -131,33 +132,52 @@
             }
 
             $points = 0;
+            $PhoneType = "Mobile";
+            $HomePhoneType = "Home";
+
             if ($error == false) { // error checking went successfully
                 try {
-                $stmt = $db->prepare("INSERT INTO Users (uemail, uname, upass, uaddrstr,uaddrcity, uaddrstate, uaddrzip,upoints)
-  VALUES (:email, :name, :password,:addOne,:addCity,:addState,:addZip,:points)");
-                $stmt->bindParam(':email', $email);
-                $stmt->bindParam(':name', $name);
-                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-                //password here
-                $stmt->bindParam(':password', $hashedPassword);
-                $stmt->bindParam(':addOne', $address);
-                $stmt->bindParam(':addCity', $city);
-                $stmt->bindParam(':addState', $state);
-                $stmt->bindParam(':addZip', $ZipCode);
-                $stmt->bindParam(':points', $points);
-                $stmt->execute();
-                session_start();
-                $_SESSION['logged_in']=true;
-                $_SESSION['email']=$email;
-                header("Location:Order.php");
-                }
-                catch(Exception $e) {
+                    //checking for prior email
+                    $loginStatement = $db->prepare("SELECT * FROM Users WHERE uemail = ?");
+                    $loginStatement->execute([$email]);
+                    $exists = $loginStatement->rowCount() != 0;
+                    if(!$exists) {
+                        $stmt = $db->prepare("INSERT INTO Users (uemail, uname, upass, uaddrstr,uaddrcity, uaddrstate, uaddrzip,upoints)
+                    VALUES (:email, :name, :password,:addOne,:addCity,:addState,:addZip,:points)");
+                        $stmt->bindParam(':email', $email);
+                        $stmt->bindParam(':name', $name);
+                        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                        $stmt->bindParam(':password', $hashedPassword);
+                        $stmt->bindParam(':addOne', $address);
+                        $stmt->bindParam(':addCity', $city);
+                        $stmt->bindParam(':addState', $state);
+                        $stmt->bindParam(':addZip', $ZipCode);
+                        $stmt->bindParam(':points', $points);
+                        $stmt->execute();
+                        $PhoneStmt = $db->prepare("INSERT INTO UsersPhone (uemail, uphone,numtype)
+                    VALUES (:email, :uphone,:numType)");
+                        $PhoneStmt->bindParam(':email', $email);
+                        $PhoneStmt->bindParam(':uphone', $HomePhone);
+                        $PhoneStmt->bindParam(':numType', $PhoneType);
+                        $PhoneStmt->execute();
+                        $PhoneStmt->bindParam(':email', $email);
+                        $PhoneStmt->bindParam(':uphone', $Phone);
+                        $PhoneStmt->bindParam(':numType', $HomePhoneType);
+                        $PhoneStmt->execute();
+                        session_start();
+                        $_SESSION['logged_in'] = true;
+                        $_SESSION['email'] = $email;
+                        header("Location:Order.php");
+                    }
+                    else{
+                        echo "<font color=red  size='5pt'>This email already has an account</font> </p>";
+
+                    }
+                } catch (Exception $e) {
                     echo "Duplicate email Address"; //this is currently not working
                 }
 
 
-
-  //QUERY WILL GO HERE
             }
         }
         ?>
@@ -251,13 +271,14 @@
 
                     <div class="col-12">
                         <label for="HomePhoneLabel">Home Phone Number:</label>
-                        <input type="text" name="HomePhoneNum" id="HomePhoneNum" placeholder="Enter your home phone number in the form '0000000000'"/>
+                        <input type="text" name="HomePhoneNum" id="HomePhoneNum"
+                               placeholder="Enter your home phone number in the form '0000000000'"/>
                     </div>
                     <div class="col-12">
                         <label for="PhoneLabel">Phone Number:</label>
-                        <input type="text" name="PhoneNum" id="PhoneNum" placeholder="Enter your phone number in the form '0000000000'"/>
+                        <input type="text" name="PhoneNum" id="PhoneNum"
+                               placeholder="Enter your phone number in the form '0000000000'"/>
                     </div>
-
 
 
                     <div class="col-12">
@@ -273,7 +294,6 @@
     <!-- Footer -->
 
 
-
 </div>
 <?php include("footer.php"); ?>
 <!-- Scripts -->
@@ -284,9 +304,15 @@
 <script src="assets/js/breakpoints.min.js"></script>
 <script src="assets/js/util.js"></script>
 <script src="assets/js/main.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
 
 </body>

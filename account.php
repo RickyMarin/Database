@@ -9,10 +9,14 @@
 
 <body class="is-preload">
 <?php
+include("library.php");
 session_start();
 if(!isset($_SESSION['logged_in'])){
     header("Location:SignUp.php");
 }
+$stmt = $db->prepare("SELECT * FROM Users WHERE uemail = ?");
+$stmt->execute([$_SESSION['email']]);
+$user = $stmt->fetch();
 ?>
 
 <?php include("LoggedInHeader.php"); ?>
@@ -48,11 +52,16 @@ if(!isset($_SESSION['logged_in'])){
                             <h2 class="text-light" style="background-color:#122C34; padding: 1rem;">
                                 Your Profile
                             </h2>
-                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Name:</b> INSERT NAME</h5>
+                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Name:</b> <?php echo $user['uname']; ?></h5>
+                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Email:</b> <?php echo $user['uemail']; ?></h5>
+                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Phone Number:</b> <?php echo $user['uname']; ?></h5>
+                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Home Phone Number:</b> <?php echo $user['uname']; ?></h5>
+                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Address:</b> <?php echo $user['uaddrstr']; ?></h5>
+                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>City:</b> <?php echo $user['uaddrcity']; ?></h5>
+                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>State:</b> <?php echo $user['uaddrstate']; ?></h5>
+                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Zip Code:</b> <?php echo $user['uaddrzip']; ?></h5>
 
-                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Email:</b> INSERT EMAIL</h5>
-                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Phone Number:</b> INSERT PHONE NUMBER</h5>
-                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Address:</b> ADDRESS</h5>
+
 
 
                         </div>
