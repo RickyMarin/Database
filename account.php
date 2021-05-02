@@ -17,6 +17,14 @@ if(!isset($_SESSION['logged_in'])){
 $stmt = $db->prepare("SELECT * FROM Users WHERE uemail = ?");
 $stmt->execute([$_SESSION['email']]);
 $user = $stmt->fetch();
+$mobile = "Mobile";
+$home = "Home";
+$Phonestmt = $db->prepare("SELECT * FROM UsersPhone WHERE uemail = ? AND numtype = ?");
+$Phonestmt->execute([$_SESSION['email'],$mobile]);
+$Phoneuser = $Phonestmt->fetch();
+$Homestmt = $db->prepare("SELECT * FROM UsersPhone WHERE uemail = ? AND numtype = ?");
+$Homestmt->execute([$_SESSION['email'],$home]);
+$Homeuser = $Homestmt->fetch();
 ?>
 
 <?php include("LoggedInHeader.php"); ?>
@@ -54,8 +62,8 @@ $user = $stmt->fetch();
                             </h2>
                             <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Name:</b> <?php echo $user['uname']; ?></h5>
                             <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Email:</b> <?php echo $user['uemail']; ?></h5>
-                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Phone Number:</b> <?php echo $user['uname']; ?></h5>
-                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Home Phone Number:</b> <?php echo $user['uname']; ?></h5>
+                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Phone Number:</b> <?php echo $Phoneuser['uphone']; ?></h5>
+                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Home Phone Number:</b> <?php echo $Homeuser['uphone']; ?></h5>
                             <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Address:</b> <?php echo $user['uaddrstr']; ?></h5>
                             <h5 class="text-secondary" style="padding: 0.5rem;"> <b>City:</b> <?php echo $user['uaddrcity']; ?></h5>
                             <h5 class="text-secondary" style="padding: 0.5rem;"> <b>State:</b> <?php echo $user['uaddrstate']; ?></h5>

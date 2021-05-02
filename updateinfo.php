@@ -225,11 +225,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         }
     }
-
-    if (empty($_POST["State"])) {
-        echo "<font color=red  size='5pt'>You did not enter a state</font> </p>";
-        $error = true;
-    }
 //    if (empty($_POST["HomePhoneNum"]) || !is_numeric($_POST["HomePhoneNum"]) || strlen($HomePhone) != 10) {
 //        echo "<font color=red  size='5pt'>You did not enter a correct home Phone Number</font> </p>";
 //        $error = true;
