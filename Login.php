@@ -12,30 +12,54 @@
     <link rel="stylesheet" href="assets/css/main.css" />
 </head>
 <?php include("library.php"); ?>
+<?php include("header.php"); ?>
+
 <?php
 function makeSafe($value)
 {
     $value = htmlspecialchars($value);
     return $value;
 }
-session_start();
 if(isset($_SESSION['logged_in'])){
     header("Location:Order.php");
 }
 
 $msg = '';
-if(isset($_POST['email']) && isset($_POST['password'])) {
-    $password = $_POST['password'];
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    $email = makeSafe($_POST["email"]);
-    //just need to make the query
+
+// Always start this first
+session_start();
+if ( ! empty( $_POST ) ) {
+ if ( isset( $_POST['email'] ) && isset( $_POST['password'] ) ) {
+ // Getting submitted user data from database
+
+ $stmt = $db->prepare("SELECT * FROM Users WHERE uemail = ?");
+ $stmt->execute([$_POST['email']]);
+ $user = $stmt->fetch();
+
+ // Verify user password and set $_SESSION
+ if ( password_verify( $_POST['password'], $user['upass'] ) ) {
+ $_SESSION['email'] = $user['uemail'];
+     header("Location:Order.php");
+     $_SESSION['logged_in'] = true;
+ }
+ else{
+echo $user->upass;
+     echo "Invalid password. Please try again";
+ }
+ }
 }
+
+
 ?>
 <body class="is-preload">
 <div id="page-wrapper">
 
-    <!-- Header -->
-    <?php include("header.php"); ?>
+    <!-- Header --><?php
+    if(isset($_SESSION['logged_in'])){
+        header("Location:Order.php");
+        echo("Please make an account");
+    }
+    ?>
 
     <section id="main" class="container medium">
         <header>
