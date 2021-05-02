@@ -37,8 +37,9 @@
     
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-            let data = JSON.parse(xmlhttp.responseText);
-            return resolve(data);
+                console.log(xmlhttp.responseText);
+                let data = JSON.parse(xmlhttp.responseText);
+                return resolve(data);
             }
         }
         let url = "./locationsdata.php?data=true";
