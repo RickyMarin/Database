@@ -16,7 +16,14 @@
 <div id="page-wrapper">
 
     <!-- Header -->
-    <?php include("header.php"); ?>
+    <?php
+    session_start();
+    if(isset($_SESSION['logged_in'])){
+        include("LoggedInHeader.php");
+    }
+    else{
+        include("header.php");
+    }?>
     <table id='locations-table'>
         <!-- <tr><td><p>Okay oO</p>Wow</td></tr>
         <tr><td>Gang!</td></tr>

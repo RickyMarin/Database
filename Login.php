@@ -15,6 +15,7 @@
 <?php include("header.php"); ?>
 
 <?php
+session_start();
 function makeSafe($value)
 {
     $value = htmlspecialchars($value);
@@ -27,7 +28,6 @@ if(isset($_SESSION['logged_in'])){
 $msg = '';
 
 // Always start this first
-session_start();
 if ( ! empty( $_POST ) ) {
  if ( isset( $_POST['email'] ) && isset( $_POST['password'] ) ) {
  // Getting submitted user data from database
