@@ -18,11 +18,10 @@
     <body class="is-preload">
 
     <?php include("LoggedInHeader.php"); ?>
-    
-
     <h3>Delivery Orders</h3>
+
     <table id='delivery-orders-table'>
-        
+        <h3>Delivery Orders</h3>
     </table>
 
 
