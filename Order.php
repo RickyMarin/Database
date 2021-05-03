@@ -106,7 +106,7 @@
             <?php include("LoggedInHeader.php"); ?>
 
 			<!-- Header -->
-            <?php include("header.php"); ?>
+
             <?php include("library.php"); ?> <!-- Includes  database login information-->
             
             <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->

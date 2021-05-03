@@ -10,9 +10,13 @@
 <body class="is-preload">
 <?php
 session_start();
+include("library.php");
 if(!isset($_SESSION['logged_in'])){
     header("Location:SignUp.php");
 }
+$stmt = $db->prepare("SELECT * FROM Users WHERE uemail = ?");
+$stmt->execute([$_SESSION['email']]);
+$user = $stmt->fetch();
 ?>
 
 <?php include("LoggedInHeader.php"); ?>
@@ -29,7 +33,7 @@ if(!isset($_SESSION['logged_in'])){
                             <h2 class="text-light" style="background-color:#122C34; padding: 1rem;">
                                 Rewards
                             </h2>
-                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Rewards:</b> You currently have INSERT NUM AWARDS HERE</h5>
+                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Rewards:</b> You currently have <?php echo $user['upoints']; ?></h5>
                             You are currently INSERT away from a reward.
                             Maybe we can add apply button
 
