@@ -14,15 +14,14 @@
         $status = 1;
         if(isset($_SESSION['email'])) {
             $uemail = $_SESSION['email'];
-            $sql = "SELECT * FROM Orders WHERE uemail = :uemail AND orderStatus = :os";
+            $sql = "SELECT * FROM Request WHERE uemail = :uemail";
             $statement = $db->prepare($sql);
             $statement->bindParam(":uemail", $uemail);
-            $statement->bindParam(":os", $status, PDO::PARAM_INT);
             $statement->execute();
             $data = json_encode($statement->fetchAll(), JSON_PRETTY_PRINT);
 
 
-            $filename = "orders.json";
+            $filename = "requests.json";
             $file = fopen($filename, "w") or die("Unable to open file!");
             fwrite($file, $data);
             fclose($file);
