@@ -123,11 +123,16 @@
                 include_once("./library.php"); // To connect to the database
                 
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
                     
                     $address = $pizza_size = $cheese = $topping = $quantity = "";
                     $email = $_SESSION['email'];
                     $deliver = 1;
-                    
+
+                    $points = 10;
+                    $newstmt = $db->prepare("UPDATE Users SET upoints = ? WHERE  uemail = ?");
+                    $newstmt->execute([$points,$email]);
+
                     $location = makeSafe($_POST["location"]); // either delivery or pickup
                     if(strcmp($location, "pickup") == 0) {  // if equal
                         $address = $_POST["pickup-method"];
@@ -182,8 +187,6 @@
                         die('Error: ' . mysqli_error($con));
                     }
                     // echo "1 record added"; // Output to user
-                    
-                    
                     mysqli_close($con);
                         
                     }
