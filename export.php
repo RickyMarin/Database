@@ -24,7 +24,7 @@
     else{
         include("header.php");
     }?>
-    <?php?>
+
 
     <a href='download.php'>Download Link!</a>
 
