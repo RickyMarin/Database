@@ -35,7 +35,8 @@ CREATE TABLE Orders (
 	PRIMARY KEY (orderNum), 
 	FOREIGN KEY (uemail) REFERENCES Users(uemail),
     FOREIGN KEY (tid) REFERENCES Topping(tid),
-    FOREIGN KEY (sid) REFERENCES Size(sid));
+    FOREIGN KEY (sid) REFERENCES Size(sid)),
+    FOREIGN KEY (eid) REFERENCES Employee(eid);
 
 
 CREATE TABLE UsersPhone (
