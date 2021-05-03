@@ -132,7 +132,7 @@
                     $email = $_SESSION['email'];
                     $deliver = 1;
 
-                    $points = 10;
+                    $points = 10 + $user['upoints'];
                     $newstmt = $db->prepare("UPDATE Users SET upoints = ? WHERE  uemail = ?");
                     $newstmt->execute([$points,$email]);
                     if($user['upoints'] >= 100){
