@@ -192,18 +192,17 @@
                     ('$email','$tid', '$sid', '$eid', '$cheese', '$quantity', '$deliver', '$cost', '$order_status')";
                     */
                     
-                    $sql=$db->prepare("INSERT INTO Order (uemail, tid, sid, eid, cheese, quantity, deliver, cost, orderStatus)
+                    $sql=$db->prepare("INSERT INTO Orders (uemail, tid, sid, eid, cheese, quantity, deliver, cost, orderStatus)
                     VALUES
                     ('$email','$tid', '$sid', '$eid', '$cheese', '$quantity', '$deliver', '$cost', '$order_status')");
                     $sql->execute();
-                    
 
                     // echo "'$email','$tid', '$sid', '$eid', '$cheese', '$quantity', '$deliver', '$cost', '$order_status'";
                     
                     
-                    if (!mysqli_query($con,$sql)) {
-                        die('Error: ' . mysqli_error($con));
-                    }
+                    //if (!mysqli_query($con,$sql)) {
+                     //   die('Error: ' . mysqli_error($con));
+                   // }
                     // echo "1 record added"; // Output to user
                     mysqli_close($con);
                         
