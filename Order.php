@@ -97,6 +97,14 @@
 	<body class="is-preload">
 		<div id="page-wrapper">
 
+            <?php
+                session_start();
+                if(!isset($_SESSION['logged_in'])) {
+                    header("Location:SignUp.php");
+                }
+            ?>
+            <?php include("LoggedInHeader.php"); ?>
+
 			<!-- Header -->
             <?php include("header.php"); ?>
             <?php include("library.php"); ?> <!-- Includes  database login information-->
