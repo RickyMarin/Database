@@ -9,7 +9,7 @@
     $dsn = "mysql:host=$host;dbname=$dbname";
     $db = new PDO($dsn, $username, $password);
 
-    $sql = "SELECT * FROM Location";
+    $sql = "SELECT * FROM Location NATURAL JOIN Employee";
     $statement = $db->prepare($sql);
     $statement->execute();
     
