@@ -102,12 +102,15 @@
                 if(!isset($_SESSION['logged_in'])) {
                     header("Location:SignUp.php");
                 }
+
             ?>
             <?php include("LoggedInHeader.php"); ?>
 
 			<!-- Header -->
-            <?php include("header.php"); ?>
-            <?php include("library.php"); ?> <!-- Includes  database login information-->
+
+            <?php include("library.php"); $stmt = $db->prepare("SELECT * FROM Users WHERE uemail = ?");
+            $stmt->execute([$_SESSION['email']]);
+            $user = $stmt->fetch();?> <!-- Includes  database login information-->
             
             <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
             
@@ -123,11 +126,20 @@
                 include_once("./library.php"); // To connect to the database
                 
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
                     
                     $address = $pizza_size = $cheese = $topping = $quantity = "";
                     $email = $_SESSION['email'];
                     $deliver = 1;
-                    
+
+                    $points = 10 + $user['upoints'];
+                    $newstmt = $db->prepare("UPDATE Users SET upoints = ? WHERE  uemail = ?");
+                    $newstmt->execute([$points,$email]);
+                    if($user['upoints'] >= 100){
+                        $points = 10;
+                        $newstmt = $db->prepare("UPDATE Users SET upoints = ? WHERE  uemail = ?");
+                        $newstmt->execute([$points,$email]);
+                    }
                     $location = makeSafe($_POST["location"]); // either delivery or pickup
                     if(strcmp($location, "pickup") == 0) {  // if equal
                         $address = $_POST["pickup-method"];
@@ -182,8 +194,6 @@
                         die('Error: ' . mysqli_error($con));
                     }
                     // echo "1 record added"; // Output to user
-                    
-                    
                     mysqli_close($con);
                         
                     }
@@ -281,11 +291,16 @@
                     </div>
                     
                     <hr>
-                    
 
-                    <p>Use points: 0</p> <!-- Use function to fetch sign in user points--> 
-                    <button type="button" class="btn btn-secondary" onclick="alert('Points applied!')">Apply</button>
-                    <p>You pay: $10.00</p> <!-- Use button function to subtract from price and take away all points from user-->
+                    <p>Use points: <?php echo $user['upoints']; ?></p> <!-- Use function to fetch sign in user points-->
+                    Your points are automatically applied and will be deducted after submitting your order.
+                   <?php $currentPrice = 10;
+                   if ($user['upoints'] >=100){
+                       $currentPrice -= 10;
+                   }
+                   ?>
+
+                    <p>You pay: $<?php echo $currentPrice; ?>.00</p> <!-- Use button function to subtract from price and take away all points from user-->
                     
 
                     <input type="submit" value="Order" class="btn btn-secondary">    

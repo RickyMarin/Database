@@ -17,6 +17,7 @@
             <li><a href="contact.php">Contact Us</a></li>
             <li><a href="OrderStatus.php">Check Order Status</a></li>
             <li><a href="account.php">Account Info</a></li>
+            <li><a href="rewards.php">Rewards</a></li>
             <li><a href='logout.php'>Click here to log out</a></li>
 
         </ul>

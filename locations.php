@@ -30,7 +30,7 @@
         <tr><td></td></tr>
         <tr><td></td></tr> -->
     </table>
-    <?php?>
+
 
     <?php include("footer.php"); ?>
 
@@ -48,7 +48,24 @@
                 return resolve(data);
             }
         }
-        let url = "./locationsdata.php?data=true";
+        let url = "./locationsdata.php?locations=true";
+
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+        });
+    }
+
+    function requestEmployees(lid) {
+        var xmlhttp = new XMLHttpRequest();
+        return new Promise ((resolve, reject) => {
+    
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                let data = JSON.parse(xmlhttp.responseText);
+                return resolve(data);
+            }
+        }
+        let url = "./locationsdata.php?employees=true&lid=" + lid;
 
         xmlhttp.open("GET", url, true);
         xmlhttp.send();
@@ -59,6 +76,7 @@
         let table = document.getElementById('locations-table');
         for(let location of locations) {
             console.log(location);
+            let lid = location.lid;
             let finalLocation = location.laddrstr + ", " + location.laddrcity + ", " + location.laddrstate + ", " + location.laddrzip;
             let newTr = document.createElement('tr');
             let newTd = document.createElement('td');
@@ -67,13 +85,12 @@
             let addressElem = document.createElement('p');
             addressElem.innerHTML = address;
             
-            let cashier = "Cashier: ";
             let cashierElem = document.createElement('p');
-            cashierElem.innerHTML = cashier;
+            cashierElem.setAttribute("id", "cashier-" + lid);
             
-            let drivers = "Drivers: ";
             let driversElem = document.createElement('p');
-            driversElem.innerHTML = drivers;
+            driversElem.setAttribute("id", "drivers-" + lid);
+
             
             newTd.appendChild(addressElem);
             newTd.appendChild(cashierElem);
@@ -91,8 +108,37 @@
         }
     };
 
-    requestLocations().then((data) => {
-        writeTable(data);
+    const updateTable = (lid, data) => {
+        let cashierElem = document.getElementById('cashier-' + lid);
+        let driversElem = document.getElementById('drivers-' + lid);
+        let drivers = []
+        for(let entry of data) {
+            if(entry.job == 'cashier') {
+                cashierElem.innerHTML = "Cashier: " + entry.ename;
+            } else {
+                drivers.push(entry.ename);
+            }
+        }
+        let driversStr = "Drivers: ";
+        for(let i = 0; i < drivers.length; i++) {
+            if (i != 0) {
+                driversStr += " ";
+            }
+            driversStr += drivers[i];
+            if (i != drivers.length - 1) {
+                driversStr += ",";
+            }
+        }
+        driversElem.innerHTML = driversStr;
+    }
+
+    requestLocations().then((locations) => {
+        writeTable(locations);
+        for(let location of locations) {
+            requestEmployees(location.lid).then((employees) => {
+                updateTable(location.lid, employees);
+            })
+        }
     });
 </script>
 <script src="assets/js/jquery.min.js"></script>
