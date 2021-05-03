@@ -357,7 +357,7 @@
                     <p>You pay: $<?php echo $currentPrice; ?>.00</p> <!-- Use button function to subtract from price and take away all points from user-->
                     
 
-                    <input type="submit" value="Order" class="btn btn-secondary">    
+                    <input type="submit" value="Order" class="btn btn-secondary" onclick= "alert('Your order went through! Check your order status for further updates.')">
                 </form>
             </div>
 
