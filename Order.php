@@ -123,6 +123,37 @@
                     return $value;
                 }
 
+                function retrieveEids($job) {
+                    $username = 'ram8ny';
+                    $password = 'Spring2021!!';
+            
+                    $dbname = 'ram8ny';
+            
+                    $host = "usersrv01.cs.virginia.edu";
+            
+                    $dsn = "mysql:host=$host;dbname=$dbname";
+                    $db = new PDO($dsn, $username, $password);
+                    $sql = "SELECT eid FROM Employee WHERE job = :job";
+                    $statement = $db->prepare($sql);
+                    $statement->bindParam(":job", $job);
+                    $statement->execute();
+                    $eids = $statement->fetchAll();
+                    return $eids;
+                }
+
+                function incrementExp($eid) {
+                    $username = 'ram8ny';
+                    $password = 'Spring2021!!';
+            
+                    $dbname = 'ram8ny';
+            
+                    $host = "usersrv01.cs.virginia.edu";
+            
+                    $dsn = "mysql:host=$host;dbname=$dbname";
+                    $db = new PDO($dsn, $username, $password);
+                    $sql = "UPDATE Cashier SET exp = exp + 1 WHERE eid = :eid";
+                }
+
                 include_once("./library.php"); // To connect to the database
                 
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -158,7 +189,20 @@
                     $quantity = $_POST['quantity'];
                     $cost = 10; // <------------------------------------------------------------------------ change later
                     $order_status = 0; // change later
-                    $eid = 2; // change later
+
+                    $eids = [];
+                    if($deliver) {
+                        // Select random driver
+                        $eids = retrieveEids("driver");
+                    } else {
+                        // Select cashier
+                        $eids = retrieveEids("cashier");
+                    }
+                    $eid_index = array_rand($eids); // change later
+                    $eid = $eids[$eid_index]['eid'];
+                    if(!$deliver) {
+                        incrementExp($eid);
+                    }
 
                     $con = new mysqli($host, $username, $password, $dbname);
 
