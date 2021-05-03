@@ -168,14 +168,14 @@
                     }
                     
                     // Form the SQL query (a SELECT query)
-                    $sql="SELECT tid FROM topping WHERE tname = '$topping'";
+                    $sql="SELECT tid FROM Topping WHERE tname = '$topping'";
                     $result = mysqli_query($con,$sql);
                     $tid = 0;  // Topping ID value: tid
                     while($row = mysqli_fetch_array($result)) {
                         $tid = $row["tid"];
                     }
 
-                    $sql="SELECT sid FROM size WHERE sname = '$pizza_size'";
+                    $sql="SELECT sid FROM Size WHERE sname = '$pizza_size'";
                     $result = mysqli_query($con,$sql);
                     $sid = 0;  // Topping ID value: tid
                     while($row = mysqli_fetch_array($result)) {
@@ -273,7 +273,7 @@
                         <label for="ham">Ham</label>
                         <input type="radio" id="beef" value="beef" name="topping">
                         <label for="beef">Beef</label>
-                        <input type="radio" id="cheddar-cheese" value="cheddar-cheese" name="topping">
+                        <input type="radio" id="cheddar-cheese" value="cheddar cheese" name="topping">
                         <label for="cheddar-cheese">Cheddar Cheese</label>
                         <input type="radio" id="pineapple" value="pineapple" name="topping">
                         <label for="pineapple">Pineapple</label>
