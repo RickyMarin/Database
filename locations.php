@@ -16,7 +16,14 @@
 <div id="page-wrapper">
 
     <!-- Header -->
-    <?php include("header.php"); ?>
+    <?php
+    session_start();
+    if(isset($_SESSION['logged_in'])){
+        include("LoggedInHeader.php");
+    }
+    else{
+        include("header.php");
+    }?>
     <table id='locations-table'>
         <!-- <tr><td><p>Okay oO</p>Wow</td></tr>
         <tr><td>Gang!</td></tr>
@@ -37,7 +44,6 @@
     
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-                console.log(xmlhttp.responseText);
                 let data = JSON.parse(xmlhttp.responseText);
                 return resolve(data);
             }
@@ -53,10 +59,11 @@
         let table = document.getElementById('locations-table');
         for(let location of locations) {
             console.log(location);
+            let finalLocation = location.laddrstr + ", " + location.laddrcity + ", " + location.laddrstate + ", " + location.laddrzip;
             let newTr = document.createElement('tr');
             let newTd = document.createElement('td');
             
-            let address = "Address: ";
+            let address = "Address: " + finalLocation;
             let addressElem = document.createElement('p');
             addressElem.innerHTML = address;
             

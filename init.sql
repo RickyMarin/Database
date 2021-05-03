@@ -26,6 +26,7 @@ CREATE TABLE Orders (
 	uemail varchar(40) NOT NULL,
     tid int(10) NOT NULL,
     sid int(10) NOT NULL,
+    eid int(10) NOT NULL,
     cheese varchar(20) NOT NULL,
     quantity varchar(7) NOT NULL,
 	deliver int(1) NOT NULL DEFAULT 1 CHECK (deliver = 0 OR deliver = 1), 
@@ -34,7 +35,8 @@ CREATE TABLE Orders (
 	PRIMARY KEY (orderNum), 
 	FOREIGN KEY (uemail) REFERENCES Users(uemail),
     FOREIGN KEY (tid) REFERENCES Topping(tid),
-    FOREIGN KEY (sid) REFERENCES Size(sid));
+    FOREIGN KEY (sid) REFERENCES Size(sid)),
+    FOREIGN KEY (eid) REFERENCES Employee(eid);
 
 
 CREATE TABLE UsersPhone (

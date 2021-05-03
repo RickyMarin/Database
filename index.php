@@ -15,7 +15,14 @@
 		<div id="page-wrapper">
 
 			<!-- Header -->
-            <?php include("header.php"); ?>
+            <?php
+            session_start();
+            if(isset($_SESSION['logged_in'])){
+                include("LoggedInHeader.php");
+            }
+            else{
+                include("header.php");
+            }?>
 
 
             <!-- Banner -->

@@ -29,7 +29,12 @@
 
 
     <!-- Header -->
-    <?php include("header.php"); ?>
+    <?php session_start();
+    if(isset($_SESSION['logged_in'])){
+        header("Location:Order.php");
+    }
+    include("header.php"); ?>
+
     <?php include("library.php"); ?>
 
     <section id="main" class="container medium">

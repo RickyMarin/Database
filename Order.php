@@ -61,6 +61,7 @@
     </style>
 
     <script>
+        
         function displayFunction(name) {
             var x = document.getElementById(name);
             if (x.style.display === "none") { // if element hidden
@@ -69,6 +70,7 @@
                 x.style.display = "none";
             }
         }
+        
 
         function displayLocationFunction() {
             if(document.getElementById("pickup").checked) {
@@ -78,6 +80,17 @@
             }
         }
 
+        /*
+        function displayFunction(name) {
+            var x = document.getElementById(name);
+            if (x.checked) {
+                document.getElementById(name.concat("-topping")).style.display = "block"; // unhide it
+            } else {
+                document.getElementById(name.concat("-topping")).style.display = "none";  //hide
+            }
+        }
+        */
+
 
     </script>
 
@@ -85,28 +98,66 @@
 		<div id="page-wrapper">
 
 			<!-- Header -->
-            <?php
-            session_start();
-            if(!isset($_SESSION['logged_in'])){
-                header("Location:SignUp.php");
-            }
-            ?>
-            <?php include("LoggedInHeader.php"); ?>
+            <?php include("header.php"); ?>
             <?php include("library.php"); ?> <!-- Includes  database login information-->
             
             <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
             
-            <?php 
-            /*
-                $con = new mysqli($SERVER, $USERNAME, $PASSWORD, $DATABASE);
+            
+            <?php
+            
+                function makeSafe($value)
+                {
+                    $value = htmlspecialchars($value);
+                    return $value;
+                }
 
+                include_once("./library.php"); // To connect to the database
+                
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                    
+                    $address = $pizza_size = $cheese = $topping = $quantity = "";
+                    
+                    $location = makeSafe($_POST["location"]); // either delivery or pickup
+                    if(strcmp($location, "pickup") == 0) {
+                        $address = $_POST["pickup-method"];
+                    }
+                    
+                    $pizza_size = $_POST["pizza-size"];
+                    
+                    if(isset($_POST['cheese'])) {
+                        $cheese = $_POST["pizza-cheese"];  // light, regular, or extra
+                    } else {
+                        $cheese = "none";
+                    }
+
+                    $topping = $_POST['topping'];
+                    $quantity = $_POST['quantity'];
+                    
+                
+                }
+                
+                /*
+                // Check connection
+                if (mysqli_connect_errno()) {
+                    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                }
+                
+                // Form the SQL query (an INSERT query)
+                $con = new mysqli($server, $username, $password, $database);
+                
+                
+                
                 // Form the SQL query (an INSERT query)
                 $sql="INSERT INTO Persons (FirstN, LastN, Age)
                 VALUES
                 ('$_POST[firstname]','$_POST[lastname]','$_POST[age]')";
                 
                 mysqli_close($con);
-            */
+                */
+
+                
+                
             ?>
 
             <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
@@ -168,89 +219,33 @@
 
                     <hr>
 
-                    <h2>Topppings:</h2>                   
-                    <p>Choose Meats:</p>
+                    <h2>Topppings:</h2>                 
+                    <p>Please select one topping</p>
 
                     <div class="pizza-topping">
-                    <input type="checkbox" id="pepperoni" name="pepperoni" onclick="displayFunction('pepperoni-topping')">
-                    <label for="pepperoni">Pepperoni</label>
-                    <select class="pepperoni-topping" name="pepperoni-topping" id="pepperoni-topping" style="display:none;">
-                        <option value="light">Light</option>
-                        <option value="regular">Regular</option>
-                        <option value="extra">Extra</option>
-                    </select>
-                    </div>
+                        <input type="radio" id="pepperoni" value="pepperoni" name="topping" checked>
+                        <label for="pepperoni">Pepperoni</label>
+                        <input type="radio" id="chicken" value="chicken" name="topping">
+                        <label for="chicken">Chicken</label>
+                        <input type="radio" id="ham" value="ham" name="topping">
+                        <label for="ham">Ham</label>
+                        <input type="radio" id="beef" value="beef" name="topping">
+                        <label for="beef">Beef</label>
+                        <input type="radio" id="cheddar-cheese" value="cheddar-cheese" name="topping">
+                        <label for="cheddar-cheese">Cheddar Cheese</label>
+                        <input type="radio" id="pineapple" value="pineapple" name="topping">
+                        <label for="pineapple">Pineapple</label>
+                        <input type="radio" id="onions" value="onions" name="topping">
+                        <label for="onions">Onions</label>
+                        <input type="radio" id="spinach" value="spinach" name="topping">
+                        <label for="spinach">Spinach</label>
 
-                    <div class="pizza-topping">
-                    <input type="checkbox" id="chicken" name="chicken" onclick="displayFunction('chicken-topping')">
-                    <label for="chicken">Chicken</label>
-                    <select class="chicken-topping" name="chicken-topping" id="chicken-topping" style="display:none;">
-                        <option value="light">Light</option>
-                        <option value="regular">Regular</option>
-                        <option value="extra">Extra</option>
-                    </select>
-                    </div>
+                        <select class="quantity" name="quantity" id="quantity">
+                            <option value="light">Light</option>
+                            <option value="regular">Regular</option>
+                            <option value="extra">Extra</option>
+                        </select>
 
-                    <div class="pizza-topping">
-                    <input type="checkbox" id="ham" name="ham" onclick="displayFunction('ham-topping')">
-                    <label for="ham">Ham</label>
-                    <select class="ham-topping" name="ham-topping" id="ham-topping" style="display:none;">
-                        <option value="light">Light</option>
-                        <option value="regular">Regular</option>
-                        <option value="extra">Extra</option>
-                    </select>
-                    </div>
-
-                    <div class="pizza-topping">
-                    <input type="checkbox" id="beef" name="beef" onclick="displayFunction('beef-topping')">
-                    <label for="beef">Beef</label>
-                    <select class="beef-topping" name="beef-topping" id="beef-topping" style="display:none;">
-                        <option value="light">Light</option>
-                        <option value="regular">Regular</option>
-                        <option value="extra">Extra</option>
-                    </select>
-                    </div>
-
-                    <p>Choose Nonmeats:</p>
-
-                    <div class="pizza-topping">
-                    <input type="checkbox" id="cheddar-cheese" name="cheddar-cheese" onclick="displayFunction('cheddar-cheese-topping')">
-                    <label for="cheddar-cheese">Cheddar Cheese</label>
-                    <select class="cheddar-cheese-topping" name="cheddar-cheese-topping" id="cheddar-cheese-topping" style="display:none;">
-                        <option value="light">Light</option>
-                        <option value="regular">Regular</option>
-                        <option value="extra">Extra</option>
-                    </select>
-                    </div>
-
-                    <div class="pizza-topping">
-                    <input type="checkbox" id="pineapple" name="pineapple" onclick="displayFunction('pineapple-topping')">
-                    <label for="pineapple">Pineapple</label>
-                    <select class="pineapple-topping" name="pineapple-topping" id="pineapple-topping" style="display:none;">
-                        <option value="light">Light</option>
-                        <option value="regular">Regular</option>
-                        <option value="extra">Extra</option>
-                    </select>
-                    </div>
-
-                    <div class="pizza-topping">
-                    <input type="checkbox" id="onions" name="onions" onclick="displayFunction('onions-topping')">
-                    <label for="onions">Onions</label>
-                    <select class="onions-topping" name="onions-topping" id="onions-topping" style="display:none;">
-                        <option value="light">Light</option>
-                        <option value="regular">Regular</option>
-                        <option value="extra">Extra</option>
-                    </select>
-                    </div>
-
-                    <div class="pizza-topping">
-                    <input type="checkbox" id="spinach" name="spinach" onclick="displayFunction('spinach-topping')">
-                    <label for="spinach">Spinach</label>
-                    <select class="spinach-topping" name="spinach-topping" id="spinach-topping" style="display:none;">
-                        <option value="light">Light</option>
-                        <option value="regular">Regular</option>
-                        <option value="extra">Extra</option>
-                    </select>
                     </div>
                     
                     <hr>
@@ -264,20 +259,6 @@
                     <input type="submit" value="Order" class="btn btn-secondary">    
                 </form>
             </div>
-            
-            
-            <!--
-            <div class="pizza-topping">
-                <input type="checkbox" id="ham" name="ham" onclick="displayFunction('ham-topping')">
-                <label for="ham">Ham</label>
-                <select class="ham-topping" name="ham-topping" id="ham-topping" style="display:none;">
-                    <option value="light">Light</option>
-                    <option value="regular">Regular</option>
-                    <option value="extra">Extra</option>
-                </select>
-            </div>
-            -->
-
 
 			<!-- Footer -->
 			<?php include("footer.php"); ?>

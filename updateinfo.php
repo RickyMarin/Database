@@ -10,6 +10,7 @@
 
 <body class="is-preload">
 <?php
+ob_start();
 include("library.php");
 session_start();
 if (!isset($_SESSION['logged_in'])) {
@@ -96,65 +97,12 @@ $Homeuser = $Homestmt->fetch();
                         <div class=""><input type="text" name="City" value='<?php echo $user['uaddrcity']; ?> '
                                              maxlength="30"
                                              class="textinput textInput form-control" required id="id_City"></div></div>
-                <div id="city" class="form-group"><label for="city" class=" requiredField">
+                <div id="State" class="form-group"><label for="State" class=" requiredField">
                         State<span class="asteriskField">*</span>
-                        <div class="col-4">
-                            <select name="State" id="State">
-                                <option value=<?php echo $user['uaddrstate']; ?> disabled selected><?php echo $user['uaddrstate']; ?></option>
-                                <option value="AL">Alabama</option>
-                                <option value="AK">Alaska</option>
-                                <option value="AZ">Arizona</option>
-                                <option value="AR">Arkansas</option>
-                                <option value="CA">California</option>
-                                <option value="CO">Colorado</option>
-                                <option value="CT">Connecticut</option>
-                                <option value="DE">Delaware</option>
-                                <option value="DC">District Of Columbia</option>
-                                <option value="FL">Florida</option>
-                                <option value="GA">Georgia</option>
-                                <option value="HI">Hawaii</option>
-                                <option value="ID">Idaho</option>
-                                <option value="IL">Illinois</option>
-                                <option value="IN">Indiana</option>
-                                <option value="IA">Iowa</option>
-                                <option value="KS">Kansas</option>
-                                <option value="KY">Kentucky</option>
-                                <option value="LA">Louisiana</option>
-                                <option value="ME">Maine</option>
-                                <option value="MD">Maryland</option>
-                                <option value="MA">Massachusetts</option>
-                                <option value="MI">Michigan</option>
-                                <option value="MN">Minnesota</option>
-                                <option value="MS">Mississippi</option>
-                                <option value="MO">Missouri</option>
-                                <option value="MT">Montana</option>
-                                <option value="NE">Nebraska</option>
-                                <option value="NV">Nevada</option>
-                                <option value="NH">New Hampshire</option>
-                                <option value="NJ">New Jersey</option>
-                                <option value="NM">New Mexico</option>
-                                <option value="NY">New York</option>
-                                <option value="NC">North Carolina</option>
-                                <option value="ND">North Dakota</option>
-                                <option value="OH">Ohio</option>
-                                <option value="OK">Oklahoma</option>
-                                <option value="OR">Oregon</option>
-                                <option value="PA">Pennsylvania</option>
-                                <option value="RI">Rhode Island</option>
-                                <option value="SC">South Carolina</option>
-                                <option value="SD">South Dakota</option>
-                                <option value="TN">Tennessee</option>
-                                <option value="TX">Texas</option>
-                                <option value="UT">Utah</option>
-                                <option value="VT">Vermont</option>
-                                <option value="VA">Virginia</option>
-                                <option value="WA">Washington</option>
-                                <option value="WV">West Virginia</option>
-                                <option value="WI">Wisconsin</option>
-                                <option value="WY">Wyoming</option>
-                            </select>
-                        </div>
-                <div id="stater" class="form-group"><label for="state" class=" requiredField">
+                        <div class=""><input type="text" name="State" value='<?php echo $user['uaddrstate']; ?> '
+                                             maxlength="30"
+                                             class="textinput textInput form-control" required id="id_State"></div></div>
+                <div id="State" class="form-group"><label for="State" class=" requiredField">
                         Zip Code<span class="asteriskField">*</span>
 
                         <div class=""><input type="text" name="ZipCode"
@@ -203,7 +151,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Phone = makeSafe($_POST["PhoneNum"]);
     $HomePhone = makeSafe($_POST["HomePhoneNum"]);
     $address = makeSafe($_POST["Address"]);
-    $state = $_POST['State'];
+    $state = $_POST["State"];
     if (empty($name)) {
         echo "<font color=red  size='5pt'>Enter your name.</font> </p>";
         $error = true;
@@ -262,6 +210,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         //checking for prior email
+
         $newstmt = $db->prepare("UPDATE Users SET uname = ?, uaddrstr = ?, uaddrcity = ?, uaddrstate = ?, uaddrzip = ? WHERE  uemail = ?");
         if (empty($email)) {
             $email = $user['uemail'];
@@ -272,7 +221,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (empty($city)) {
             $city = $user['uaddrcity'];
         }
-        if (empty($state)) {
+        if (empty($state) || strlen($state) != 2) {
             $state = $user['uaddrstate'];
         }
         if (empty($ZipCode)) {
@@ -281,6 +230,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (empty($name)) {
             $name = $user['uname'];
         }
+        if(!$error){
         $newstmt->execute([$name, $address, $city, $state, $ZipCode, $email]);
         $newPhonestmt = $db->prepare("UPDATE UsersPhone SET uphone = ? WHERE  uemail = ? AND numtype = ?" );
         if (empty($Phone)) {
@@ -290,12 +240,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $HomePhone = $Homeuser['uphone'];
         }
         $newPhonestmt->execute([$Phone,$email,$mobile]);
-        $newPhonestmt->execute([$HomePhone,$email,$home]);
-        //header("Location:Order.php");
+        $newPhonestmt->execute([$HomePhone,$email,$home]);}
 
     } catch (Exception $e) {
 
     }
+    ob_end_clean();
+    header("Location: ../account.php");
+
 }
 include("footer.php"); ?>
 </body>
