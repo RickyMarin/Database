@@ -169,24 +169,35 @@
                     
                     // Form the SQL query (a SELECT query)
                     $sql="SELECT tid FROM Topping WHERE tname = '$topping'";
+                    // $sql= $db->prepare("SELECT tid FROM Topping WHERE tname = '$topping'");
                     $result = mysqli_query($con,$sql);
+                    // $result = $sql->execute();
                     $tid = 0;  // Topping ID value: tid
                     while($row = mysqli_fetch_array($result)) {
                         $tid = $row["tid"];
                     }
-
+                    
                     $sql="SELECT sid FROM Size WHERE sname = '$pizza_size'";
+                    //$sql= $db->prepare("SELECT sid FROM Size WHERE sname = '$pizza_size'");
                     $result = mysqli_query($con,$sql);
+                    //$result = $sql->execute();
                     $sid = 0;  // Topping ID value: tid
                     while($row = mysqli_fetch_array($result)) {
                         $sid = $row["sid"];
                     }
                     
-                    
+                    /*
                     $sql="INSERT INTO Order (uemail, tid, sid, eid, cheese, quantity, deliver, cost, orderStatus)
                     VALUES
                     ('$email','$tid', '$sid', '$eid', '$cheese', '$quantity', '$deliver', '$cost', '$order_status')";
+                    */
                     
+                    $sql=$db->prepare("INSERT INTO Order (uemail, tid, sid, eid, cheese, quantity, deliver, cost, orderStatus)
+                    VALUES
+                    ('$email','$tid', '$sid', '$eid', '$cheese', '$quantity', '$deliver', '$cost', '$order_status')");
+                    $sql->execute();
+                    
+
                     // echo "'$email','$tid', '$sid', '$eid', '$cheese', '$quantity', '$deliver', '$cost', '$order_status'";
                     
                     
