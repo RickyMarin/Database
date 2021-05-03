@@ -11,31 +11,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
 </head>
-<?php include("library.php"); ?>
 <?php
+//$SERVER = 'usersrv01.cs.virginia.edu';
+//$USERNAME = 'ram8ny';
+//$PASSWORD = 'Spring2021!!';
+//$DATABASE = 'ram8ny';
+//$con = new mysqli($SERVER, $USERNAME, $PASSWORD, $DATABASE);
+//// Check connection
+//if (mysqli_connect_errno()) {
+//    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+//}
+//// Form the SQL query (an INSERT query)
+//
+//
+//
+//
+try {
+    $username = 'ram8ny_d';
+    $password = 'Spring2021!!';
+
+    $dbname = 'ram8ny';
+
+    $host = "usersrv01.cs.virginia.edu";
+
+    $dsn = "mysql:host=$host;dbname=$dbname";
+    $db = new PDO($dsn, $username, $password);
+} catch (PDOException $e) {
+
+    $error_message = $e->getMessage();
+
+    echo "<p>An error occurred while connecting to the database: $error_message </p>";
+
+} catch (Exception $e) {
+
+    $error_message = $e->getMessage();
+
+    echo "<p>Error Message: $error_message </p>";
+
+}
+//?>
+<?php include("header.php"); ?>
+
+<?php
+session_start();
 function makeSafe($value)
 {
     $value = htmlspecialchars($value);
     return $value;
 }
-session_start();
 if(isset($_SESSION['logged_in'])){
     header("Location:Order.php");
 }
 
 $msg = '';
-if(isset($_POST['email']) && isset($_POST['password'])) {
-    $password = $_POST['password'];
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    $email = makeSafe($_POST["email"]);
-    //just need to make the query
+
+// Always start this first
+if ( ! empty( $_POST ) ) {
+ if ( isset( $_POST['email'] ) && isset( $_POST['password'] ) ) {
+ // Getting submitted user data from database
+
+ $stmt = $db->prepare("SELECT * FROM Users WHERE uemail = ?");
+ $stmt->execute([$_POST['email']]);
+ $user = $stmt->fetch();
+
+ // Verify user password and set $_SESSION
+ if ( password_verify( $_POST['password'], $user['upass'] ) ) {
+ $_SESSION['email'] = $user['uemail'];
+     header("Location:Order.php");
+     $_SESSION['logged_in'] = true;
+ }
+ else{
+echo $user->upass;
+     echo "Invalid password. Please try again";
+ }
+ }
 }
+
+
 ?>
 <body class="is-preload">
 <div id="page-wrapper">
 
-    <!-- Header -->
-    <?php include("header.php"); ?>
+    <!-- Header --><?php
+    if(isset($_SESSION['logged_in'])){
+        header("Location:Order.php");
+        echo("Please make an account");
+    }
+    ?>
 
     <section id="main" class="container medium">
         <header>

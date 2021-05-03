@@ -9,10 +9,22 @@
 
 <body class="is-preload">
 <?php
+include("library.php");
 session_start();
-//if(!isset($_SESSION['logged_in'])){
-//    header("Location:SignUp.php");
-//}
+if(!isset($_SESSION['logged_in'])){
+    header("Location:SignUp.php");
+}
+$stmt = $db->prepare("SELECT * FROM Users WHERE uemail = ?");
+$stmt->execute([$_SESSION['email']]);
+$user = $stmt->fetch();
+$mobile = "Mobile";
+$home = "Home";
+$Phonestmt = $db->prepare("SELECT * FROM UsersPhone WHERE uemail = ? AND numtype = ?");
+$Phonestmt->execute([$_SESSION['email'],$mobile]);
+$Phoneuser = $Phonestmt->fetch();
+$Homestmt = $db->prepare("SELECT * FROM UsersPhone WHERE uemail = ? AND numtype = ?");
+$Homestmt->execute([$_SESSION['email'],$home]);
+$Homeuser = $Homestmt->fetch();
 ?>
 
 <?php include("LoggedInHeader.php"); ?>
@@ -32,7 +44,7 @@ session_start();
                             </div>
                             <div class="text-center">
                                 <p><p>
-                                    <a class="btn btn-info btn-lg" href="/updateinfo.php/">Update Info</a>
+                                    <a class="btn btn-info btn-lg" href="updateinfo.php/">Update Info</a>
                                 </p></p>
                             </div>
                         </div>
@@ -48,11 +60,16 @@ session_start();
                             <h2 class="text-light" style="background-color:#122C34; padding: 1rem;">
                                 Your Profile
                             </h2>
-                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Name:</b> INSERT NAME</h5>
+                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Name:</b> <?php echo $user['uname']; ?></h5>
+                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Email:</b> <?php echo $user['uemail']; ?></h5>
+                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Phone Number:</b> <?php echo $Phoneuser['uphone']; ?></h5>
+                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Home Phone Number:</b> <?php echo $Homeuser['uphone']; ?></h5>
+                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Address:</b> <?php echo $user['uaddrstr']; ?></h5>
+                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>City:</b> <?php echo $user['uaddrcity']; ?></h5>
+                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>State:</b> <?php echo $user['uaddrstate']; ?></h5>
+                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Zip Code:</b> <?php echo $user['uaddrzip']; ?></h5>
 
-                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Email:</b> INSERT EMAIL</h5>
-                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Phone Number:</b> INSERT PHONE NUMBER</h5>
-                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Address:</b> ADDRESS</h5>
+
 
 
                         </div>

@@ -10,9 +10,9 @@
 <body class="is-preload">
 <?php
 session_start();
-//if(!isset($_SESSION['logged_in'])){
-//    header("Location:SignUp.php");
-//}
+if(!isset($_SESSION['logged_in'])){
+    header("Location:SignUp.php");
+}
 ?>
 
 <?php include("LoggedInHeader.php"); ?>

@@ -15,16 +15,26 @@
 		<div id="page-wrapper">
 
 			<!-- Header -->
-			<?php include("header.php"); ?>
+            <?php
+            session_start();
+            if(isset($_SESSION['logged_in'])){
+                include("LoggedInHeader.php");
+            }
+            else{
+                include("header.php");
+            }?>
 
-<!-- Banner -->
+
+            <!-- Banner -->
 				<section id="banner">
 					<h2>Hoo's Pizza</h2>
 					<p>When you want some pizza, you order some pizza</p>
 					<ul class="actions special">
 						<li><a href="SignUp.php" class="button primary">Sign Up</a></li>
-						<li><a href="Order.php" class="button">Learn More</a></li>
-					</ul>
+                        <li><a href="Login.php" class="button primary">Log In</a></li>
+
+
+                    </ul>
 				</section>
 
 			<!-- Main -->
