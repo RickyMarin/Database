@@ -38,7 +38,6 @@ if(($_SERVER["REQUEST_METHOD"] == "POST"))
             <h2>Tell us about your experience!</h2>
         </header>
 
-        <?php include("header.php"); ?>
         <?php
         session_start();
         if(!isset($_SESSION['logged_in'])){

@@ -33,9 +33,13 @@ $user = $stmt->fetch();
                             <h2 class="text-light" style="background-color:#122C34; padding: 1rem;">
                                 Rewards
                             </h2>
-                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Rewards:</b> You currently have <?php echo $user['upoints']; ?></h5>
-                            You are currently INSERT away from a reward.
-                            Maybe we can add apply button
+                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Rewards:</b> You currently have <?php echo $user['upoints']; ?> points</h5>
+                            <?php if ($user['upoints'] < 100){
+                                echo "You are " , 100  - $user['upoints'] ," points away from a reward";
+                            }
+                            else{
+                                echo "Congratulations! You have earned a reward";
+                            }?>
 
 
                         </div>
