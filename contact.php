@@ -47,11 +47,10 @@ if(($_SERVER["REQUEST_METHOD"] == "POST"))
         ?>
 
         <form  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
-            <label for="email">Email:</label><br>
-            <input type="text" id="email" name="email"><br>
-            <label for="note">Note:</label><br>
+            <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Email:</b> <?php echo $_SESSION['email'];; ?></h5>
+            Help us improve Hoo's Pizza!
             <textarea id="note" name="note" rows="8" cols="25">
-Help us improve Hoo's Pizza!
+
                         </textarea>
             <input type="submit" name = "Submit" value="Submit" style="margin:15px;">
         </form>
