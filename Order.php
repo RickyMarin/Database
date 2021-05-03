@@ -183,7 +183,7 @@
                     }
                     
                     
-                    $sql="INSERT INTO orders (uemail, tid, sid, eid, cheese, quantity, deliver, cost, orderStatus)
+                    $sql="INSERT INTO Order (uemail, tid, sid, eid, cheese, quantity, deliver, cost, orderStatus)
                     VALUES
                     ('$email','$tid', '$sid', '$eid', '$cheese', '$quantity', '$deliver', '$cost', '$order_status')";
                     
