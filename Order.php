@@ -96,7 +96,7 @@
 
 	<body class="is-preload">
 		<div id="page-wrapper">
-
+            
             <?php
                 session_start();
                 if(!isset($_SESSION['logged_in'])) {
@@ -125,10 +125,13 @@
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     
                     $address = $pizza_size = $cheese = $topping = $quantity = "";
+                    $email = $_SESSION['email'];
+                    $deliver = 1;
                     
                     $location = makeSafe($_POST["location"]); // either delivery or pickup
-                    if(strcmp($location, "pickup") == 0) {
+                    if(strcmp($location, "pickup") == 0) {  // if equal
                         $address = $_POST["pickup-method"];
+                        $deliver = 0;
                     }
                     
                     $pizza_size = $_POST["pizza-size"];
@@ -141,28 +144,49 @@
 
                     $topping = $_POST['topping'];
                     $quantity = $_POST['quantity'];
+                    $cost = 10; // <------------------------------------------------------------------------ change later
+                    $order_status = 0; // change later
+                    $eid = 2; // change later
+
+                    $con = new mysqli($host, $username, $password, $dbname);
+
+                    // Check connection
+                    if (mysqli_connect_errno()) {
+                        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                    }
                     
-                
-                }
-                
-                /*
-                // Check connection
-                if (mysqli_connect_errno()) {
-                    echo "Failed to connect to MySQL: " . mysqli_connect_error();
-                }
-                
-                // Form the SQL query (an INSERT query)
-                $con = new mysqli($server, $username, $password, $database);
-                
-                
-                
-                // Form the SQL query (an INSERT query)
-                $sql="INSERT INTO Persons (FirstN, LastN, Age)
-                VALUES
-                ('$_POST[firstname]','$_POST[lastname]','$_POST[age]')";
-                
-                mysqli_close($con);
-                */
+                    // Form the SQL query (a SELECT query)
+                    $sql="SELECT tid FROM topping WHERE tname = '$topping'";
+                    $result = mysqli_query($con,$sql);
+                    $tid = 0;  // Topping ID value: tid
+                    while($row = mysqli_fetch_array($result)) {
+                        $tid = $row["tid"];
+                    }
+
+                    $sql="SELECT sid FROM size WHERE sname = '$pizza_size'";
+                    $result = mysqli_query($con,$sql);
+                    $sid = 0;  // Topping ID value: tid
+                    while($row = mysqli_fetch_array($result)) {
+                        $sid = $row["sid"];
+                    }
+                    
+                    
+                    $sql="INSERT INTO orders (uemail, tid, sid, eid, cheese, quantity, deliver, cost, orderStatus)
+                    VALUES
+                    ('$email','$tid', '$sid', '$eid', '$cheese', '$quantity', '$deliver', '$cost', '$order_status')";
+                    
+                    // echo "'$email','$tid', '$sid', '$eid', '$cheese', '$quantity', '$deliver', '$cost', '$order_status'";
+                    
+                    
+                    if (!mysqli_query($con,$sql)) {
+                        die('Error: ' . mysqli_error($con));
+                    }
+                    // echo "1 record added"; // Output to user
+                    
+                    
+                    mysqli_close($con);
+                        
+                    }
 
                 
                 
