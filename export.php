@@ -26,7 +26,7 @@
     }?>
 
 
-    <a href='download.php'>Download Link!</a>
+    <a href='downloadCompletedOrders.php'>Download Link!</a>
 
     <?php include("footer.php"); ?>
 
