@@ -15,15 +15,19 @@
 <?php include("header.php"); ?>
 <?php include("library.php"); ?>
 <?php
+session_start();
+if(!isset($_SESSION['logged_in'])){
+    header("Location:SignUp.php");
+}
 if(($_SERVER["REQUEST_METHOD"] == "POST"))
 {
-    $uemail = $_POST['email'];
-    echo $uemail;
-    $rid = rand(0, 10000);
+    echo "<p style=text-align:center;padding-top:15%>Thank you for your feedback!</p>";
+    $uemail = $_SESSION['email'];
     $rnote = $_POST['note'];
-    $result = $db->prepare("INSERT INTO Request (rid, uemail, rnote) VALUES (0, test, test)");
+    $result = $db->prepare("INSERT INTO Request (uemail, rnote) VALUES (:uemail, :rnote)");
+    $result->bindParam(':uemail', $uemail);
+    $result->bindParam(':rnote', $rnote);
     $result->execute();
-    echo "Hi";
 }
 ?>
 <body class="is-preload">
@@ -39,10 +43,7 @@ if(($_SERVER["REQUEST_METHOD"] == "POST"))
         </header>
 
         <?php
-        session_start();
-        if(!isset($_SESSION['logged_in'])){
-            header("Location:SignUp.php");
-        }
+
         ?>
 
         <form  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
