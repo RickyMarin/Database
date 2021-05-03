@@ -25,10 +25,6 @@
         include("header.php");
     }?>
     <table id='locations-table'>
-        <!-- <tr><td><p>Okay oO</p>Wow</td></tr>
-        <tr><td>Gang!</td></tr>
-        <tr><td></td></tr>
-        <tr><td></td></tr> -->
     </table>
     <?php?>
 
