@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="assets/css/main.css" />
 </head>
 
-<?php include("header.php"); ?>
+<?php include("LoggedInHeader.php"); ?>
 <?php include("library.php"); ?>
 <?php
 session_start();
