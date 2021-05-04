@@ -69,11 +69,28 @@
             xmlhttp.send();
             });
         }
+
+        function completeOrder(orderNum) {
+            var xmlhttp = new XMLHttpRequest();
+            return new Promise ((resolve, reject) => {
+        
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                    resolve();
+                }
+            }
+            let url = "./completeorder.php?orderNum=" + orderNum;
+            
+
+            xmlhttp.open("GET", url, true);
+            xmlhttp.send();
+            });
+        }
     
     const writeTableDeliver = (orders) => {
         let table = document.getElementById('delivery-orders-table');
+        table.innerHTML = '';
         for(let order of orders) {
-            console.log(order);
             //let finalLocation = order.laddrstr + ", " + order.laddrcity + ", " + order.laddrstate + ", " + order.laddrzip;
             let newTr = document.createElement('tr');
             let newTd = document.createElement('td');
@@ -114,8 +131,8 @@
 
         const writeTablePickup = (orders) => {
         let table = document.getElementById('pickup-orders-table');
+        table.innerHTML = '';
         for(let order of orders) {
-            console.log(order);
             let finalLocation = order.laddrstr + ", " + order.laddrcity + ", " + order.laddrstate + ", " + order.laddrzip;
             let newTr = document.createElement('tr');
             let newTd = document.createElement('td');
@@ -165,12 +182,35 @@
 
 
         requestDeliveryOrders().then((data) => {
-            writeTableDeliver(data);
-        });
+                writeTableDeliver(data);
+            });
 
         requestPickupOrders().then((data) => {
             writeTablePickup(data);
         });
+
+        let finishOrder = setInterval(() => {
+            requestDeliveryOrders().then((data) => {
+                if (data.length != 0) {
+                    completeOrder(data[0].orderNum);
+                }
+            });
+
+            requestPickupOrders().then((data) => {
+                if (data.length != 0) {
+                    completeOrder(data[0].orderNum);
+                }
+            });
+
+            requestDeliveryOrders().then((data) => {
+                writeTableDeliver(data);
+            });
+
+            requestPickupOrders().then((data) => {
+                writeTablePickup(data);
+            });
+
+        }, 15*1000);
 
 
     </script>
