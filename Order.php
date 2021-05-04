@@ -106,6 +106,22 @@
             ?>
             <?php include("LoggedInHeader.php"); ?>
 
+            <?php 
+            try {
+                include("library.php");
+                $query = "SELECT * FROM Location";
+                global $db;
+                $statement = $db->prepare($query);
+                $statement->execute();
+
+                $locations = $statement->fetchAll();
+                } catch (Exception $e) {
+                    $error_message = $e->getMessage();
+                    echo "<p>Error message: $error_message </p>";
+                }
+
+            ?>
+
 			<!-- Header -->
 
             <?php include("library.php"); $stmt = $db->prepare("SELECT * FROM Users WHERE uemail = ?");
@@ -273,9 +289,15 @@
                     <input type="radio" id="pickup" name="location" value="pickup" onclick="displayLocationFunction()">
                     <label for="pickup">Pickup</label>
                     <select class="pickup-method" name="pickup-method" id="pickup-method" style="display:none;">
-                        <option value="address1">26 Smoky Hollow Drive, Pomona, CA 91768</option>
-                        <option value="address2">274 Plumb Branch Ave., Duluth, GA 30096</option>
-                        <option value="address3">21 Bald Hill St., Rossville, GA 30741</option>
+                        <?php $i=0 ?>
+                        <?php foreach( $locations as $location ): ?>
+                            <?php if($i == 0) : ?>
+                                <option value="<?php echo $location['lid']?>" id='lid-[insert lid]' checked><?php echo $location['laddrstr'] . ', ' . $location['laddrcity'] . ', ' . $location['laddrstate'] . ', ' . $location['laddrzip']?></option>
+                            <?php else : ?>
+                                <option value="<?php echo $location['lid']?>" id='lid-[insert lid]'><?php echo $location['laddrstr'] . ', ' . $location['laddrcity'] . ', ' . $location['laddrstate'] . ', ' . $location['laddrzip']?></option>
+                            <?php endif; ?>
+                            <?php $i=$i+1; ?>
+                        <?php endforeach;?>
                     </select>
                     </div>
 
