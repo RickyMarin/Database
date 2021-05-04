@@ -25,4 +25,22 @@
         $statement->execute();
         echo json_encode($statement->fetchAll());
     }
+
+    if(isset($_GET['cashier'])) {
+        $eid = $_GET['eid'];
+        $sql = "SELECT * FROM Cashier WHERE eid = :eid";
+        $statement = $db->prepare($sql);
+        $statement->bindParam(":eid", $eid);
+        $statement->execute();
+        echo json_encode($statement->fetchAll());
+    }
+
+    if(isset($_GET['driver'])) {
+        $eid = $_GET['eid'];
+        $sql = "SELECT * FROM Driver WHERE eid = :eid";
+        $statement = $db->prepare($sql);
+        $statement->bindParam(":eid", $eid);
+        $statement->execute();
+        echo json_encode($statement->fetchAll());
+    }
 ?>
