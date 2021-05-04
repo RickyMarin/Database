@@ -68,6 +68,8 @@ $Homeuser = $Homestmt->fetch();
                             <h5 class="text-secondary" style="padding: 0.5rem;"> <b>City:</b> <?php echo $user['uaddrcity']; ?></h5>
                             <h5 class="text-secondary" style="padding: 0.5rem;"> <b>State:</b> <?php echo $user['uaddrstate']; ?></h5>
                             <h5 class="text-secondary" style="padding: 0.5rem;"> <b>Zip Code:</b> <?php echo $user['uaddrzip']; ?></h5>
+                            <h5 class="text-secondary" style="padding: 0.5rem;"> <b><a href='export.php'>Get Data?</a></b></h5>
+
 
 
 

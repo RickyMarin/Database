@@ -26,8 +26,9 @@
     }?>
 
 
-    <a href='downloadCompletedOrders.php'>All Previously Compeleted Orders!</a>
-    <a href='downloadRequests.php'>All Sent Requests!</a>
+    <a href='downloadCompletedOrders.php'>Download All Previously Compeleted Orders!</a>
+    <br/>
+    <a href='downloadRequests.php'>Download All Sent Requests!</a>
 
     <?php include("footer.php"); ?>
 
