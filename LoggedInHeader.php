@@ -15,6 +15,7 @@
             <li><a href="index.php">Home</a></li>
             <li><a href="Order.php">Order a Pizza!</a></li>
             <li><a href="contact.php">Contact Us</a></li>
+            <li><a href="locations.php">Locations</a></li>
             <li><a href="OrderStatus.php">Check Order Status</a></li>
             <li><a href="account.php">Account Info</a></li>
             <li><a href="rewards.php">Rewards</a></li>
