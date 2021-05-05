@@ -19,7 +19,7 @@
 
     if(isset($_GET['employees'])) {
         $lid = $_GET['lid'];
-        $sql = "SELECT * FROM Employee WHERE lid = :lid";
+        $sql = "CALL getEmployees(:lid)";
         $statement = $db->prepare($sql);
         $statement->bindParam(":lid", $lid);
         $statement->execute();
